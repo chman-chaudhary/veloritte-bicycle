@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Oblivion";
+  src: url("./assets/fonts/OblivonFuture.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: url("./assets/fonts/RedHatDisplay.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
