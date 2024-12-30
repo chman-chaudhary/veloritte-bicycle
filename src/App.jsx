@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import Loading from "./components/Loading";
 
 const images = {
-  white: ["white_front.webp", "white_back.webp", "white_side.webp"],
-  black: ["black_front.webp", "black_back.webp", "black_side.webp"],
-  gray: ["gray_front.webp", "gray_back.webp", "gray_side.webp"],
-  bw: ["bw_front.webp", "bw_back.webp", "bw_side.webp"],
+  white: ["white_front.webp", "white_side.webp", "white_back.webp"],
+  black: ["black_front.webp", "black_side.webp", "black_back.webp"],
+  gray: ["gray_front.webp", "gray_side.webp", "gray_back.webp"],
+  bw: ["bw_front.webp", "bw_side.webp", "bw_back.webp"],
 };
 
 function App() {

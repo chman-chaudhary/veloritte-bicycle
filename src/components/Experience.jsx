@@ -1,4 +1,22 @@
+import { useEffect, useState } from "react";
+
 const Experience = ({ images, image, setImage }) => {
+  const [index, setIndex] = useState(0);
+  const [loadingIndex, setLoadingIndex] = useState(null);
+
+  useEffect(() => {
+    setIndex(0);
+  }, [image]);
+
+  const handleImageChange = (newIndex) => {
+    if (newIndex === index) return; // Prevent re-triggering for the same index
+    setLoadingIndex(newIndex); // Set the button as loading
+    setTimeout(() => {
+      setIndex(newIndex); // Change the image after loading completes
+      setLoadingIndex(null); // Reset the loading state
+    }, 2000); // 2-second loading animation
+  };
+
   return (
     <div
       className={
@@ -12,7 +30,8 @@ const Experience = ({ images, image, setImage }) => {
           : "from-[rgb(190,177,171)] via-white to-[rgb(228,223,222)]")
       }
     >
-      <div className="absolute right-60 flex items-center justify-center w-[25rem] h-[25rem] border-gray-500/40 border-r-2 rounded-full opacity-0 animate-rotate18">
+      {/* Color Selector */}
+      <div className="absolute right-56 bottom-20 flex items-center justify-center w-[25rem] h-[25rem] border-gray-500/40 border-r-2 rounded-full opacity-0 animate-rotate18">
         <div
           onClick={() => setImage(images.white)}
           className={
@@ -49,10 +68,26 @@ const Experience = ({ images, image, setImage }) => {
               : "shadow-[0_0_0px_8px_rgba(128,128,128,0.5)]")
           }
         >
-          <div className="h-full w-1/2 bg-black"></div>
+          <div
+            onClick={() => setImage(images.bw)}
+            className="h-full w-1/2 bg-black"
+          ></div>
         </div>
       </div>
-      <img className="h-[45rem]" src={image[0]} alt="cycle" />
+
+      {/* Cycle Image */}
+      <img className="h-[45rem]" src={image[index]} alt="cycle" />
+
+      <div className="absolute bottom-12 left-1/2 -translate-x-[50%] flex items-center gap-x-6 z-10">
+        {[0, 1, 2].map((idx) => (
+          <div
+            onClick={() => setIndex(idx)}
+            className={`h-1 w-24 rounded-full cursor-pointer bg-black ${
+              index === idx ? "bg-white" : "bg-gray-400"
+            }`}
+          ></div>
+        ))}
+      </div>
     </div>
   );
 };
