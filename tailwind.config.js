@@ -16,10 +16,15 @@ export default {
           "0%": { transform: "translateX(0)" }, // Cover fully covers the text
           "100%": { transform: "translateX(99%)" }, // Slower at the end
         },
+        timer: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
       },
       animation: {
         rotate18: "rotate18 0.6s ease-out 0.3s forwards",
         loading: "loading 1s ease-out forwards",
+        timer: "timer 5s linear forwards",
       },
     },
   },

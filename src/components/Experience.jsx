@@ -2,20 +2,21 @@ import { useEffect, useState } from "react";
 
 const Experience = ({ images, image, setImage }) => {
   const [index, setIndex] = useState(0);
-  const [loadingIndex, setLoadingIndex] = useState(null);
+  const [cycleIndex, setCycleIndex] = useState(0);
 
   useEffect(() => {
     setIndex(0);
+    setCycleIndex(0);
+
+    const intervalId = setInterval(
+      () => setCycleIndex((prev) => (prev + 1) % image.length),
+      5000
+    );
+
+    return () => clearInterval(intervalId);
   }, [image]);
 
-  const handleImageChange = (newIndex) => {
-    if (newIndex === index) return; // Prevent re-triggering for the same index
-    setLoadingIndex(newIndex); // Set the button as loading
-    setTimeout(() => {
-      setIndex(newIndex); // Change the image after loading completes
-      setLoadingIndex(null); // Reset the loading state
-    }, 2000); // 2-second loading animation
-  };
+  useEffect(() => setIndex(cycleIndex), [cycleIndex]);
 
   return (
     <div
@@ -31,7 +32,7 @@ const Experience = ({ images, image, setImage }) => {
       }
     >
       {/* Color Selector */}
-      <div className="absolute right-56 bottom-20 flex items-center justify-center w-[25rem] h-[25rem] border-gray-500/40 border-r-2 rounded-full opacity-0 animate-rotate18">
+      <div className="absolute z-10 right-56 bottom-20 flex items-center justify-center w-[25rem] h-[25rem] border-gray-500/40 border-r-2 rounded-full opacity-0 animate-rotate18">
         <div
           onClick={() => setImage(images.white)}
           className={
@@ -78,14 +79,28 @@ const Experience = ({ images, image, setImage }) => {
       {/* Cycle Image */}
       <img className="h-[45rem]" src={image[index]} alt="cycle" />
 
+      {/* Image selector */}
       <div className="absolute bottom-12 left-1/2 -translate-x-[50%] flex items-center gap-x-6 z-10">
         {[0, 1, 2].map((idx) => (
           <div
             onClick={() => setIndex(idx)}
-            className={`h-1 w-24 rounded-full cursor-pointer bg-black ${
-              index === idx ? "bg-white" : "bg-gray-400"
+            className={`h-1 w-24 rounded-full cursor-pointer bg-black overflow-hidden ${
+              image[0] === "black_front.webp" || image[0] === "gray_front.webp"
+                ? "bg-gray-700"
+                : "bg-gray-400"
             }`}
-          ></div>
+          >
+            <div
+              className={`h-full w-full rounded-full ${
+                cycleIndex !== idx
+                  ? "animate-none"
+                  : image[0] === "black_front.webp" ||
+                    image[0] === "gray_front.webp"
+                  ? "animate-timer bg-white"
+                  : "animate-timer bg-black"
+              }`}
+            ></div>
+          </div>
         ))}
       </div>
     </div>
